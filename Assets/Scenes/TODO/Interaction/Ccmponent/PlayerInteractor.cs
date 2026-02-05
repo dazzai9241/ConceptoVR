@@ -3,19 +3,23 @@ using UnityEngine.InputSystem;
 
 public class PlayerInteractor : MonoBehaviour
 {
-    [SerializeField] private float radius = 2f;
-    [SerializeField] private LayerMask interactableLayers;
+    [Header("Interaction Settings")]
+    [SerializeField] private float radius = 0.5f;                 // distance to interact
+    [SerializeField] private LayerMask interactableLayers;        // layer mask for interactables
+    [SerializeField] private Transform detector;                  // optional: object to use as proximity origin
 
-    private Collider[] buffer = new Collider[32];
+    private Collider[] buffer = new Collider[32];                 // temporary array for OverlapSphereNonAlloc
     private IInteractable focused;
+
+    private Vector3 InteractionOrigin => detector != null ? detector.position : transform.position;
 
     private void Update()
     {
-        // Find nearest interactable within radius
+        // Find the nearest interactable
         IInteractable nearest = FindNearestInteractable();
         UpdateFocus(nearest);
 
-        // Only toggle if an interactable is in focus (i.e., you are close enough)
+        // Toggle interactable on keyboard input
         if (focused != null && Keyboard.current != null &&
             Keyboard.current.tKey.wasPressedThisFrame)
         {
@@ -25,54 +29,66 @@ public class PlayerInteractor : MonoBehaviour
     }
 
     private IInteractable FindNearestInteractable()
-{
-    int count = Physics.OverlapSphereNonAlloc(
-        transform.position,
-        radius,
-        buffer,
-        interactableLayers,
-        QueryTriggerInteraction.Collide
-    );
-
-
-         IInteractable nearest = null;
-         float bestDistSq = float.MaxValue;
-        for (int i = 0; i < count; i++)
     {
-        Collider col = buffer[i];
-        if (col == null) continue;
+        int count = Physics.OverlapSphereNonAlloc(
+            InteractionOrigin,
+            radius,
+            buffer,
+            interactableLayers,
+            QueryTriggerInteraction.Collide
+        );
 
-        IInteractable interactable = col.GetComponentInParent<IInteractable>();
-        if (interactable == null) continue;
-        if (!interactable.CanInteract()) continue;
+        IInteractable nearest = null;
+        float bestDistSq = float.MaxValue;
 
-            // Safe distance check
-           Vector3 diff = interactable.Transform.position - transform.position;
-            if (!float.IsFinite(diff.x) || !float.IsFinite(diff.y) || !float.IsFinite(diff.z))
-            continue;
-
-
-          float distSq = diff.sqrMagnitude;
-            if (distSq > radius * radius)
-            continue;
-
-        if (distSq < bestDistSq)
+        for (int i = 0; i < count; i++)
         {
-            bestDistSq = distSq;
-            nearest = interactable;
-        }
+            Collider col = buffer[i];
+            if (col == null || !col.enabled) continue;
+
+            IInteractable interactable = col.GetComponentInParent<IInteractable>();
+            if (interactable == null || !interactable.CanInteract()) continue;
+
+            Vector3 diff = interactable.Transform.position - InteractionOrigin;
+
+            // Skip invalid positions
+            if (!IsFinite(diff)) continue;
+
+            float distSq = diff.sqrMagnitude;
+
+            if (distSq > radius * radius) continue;
+
+            if (distSq < bestDistSq)
+            {
+                bestDistSq = distSq;
+                nearest = interactable;
+            }
         }
 
-        return nearest; // null if nothing in range
+        return nearest;
     }
 
     private void UpdateFocus(IInteractable nearest)
     {
-        // Only update if the focused object changes
         if (ReferenceEquals(focused, nearest)) return;
 
         focused?.OnFocusLost();
         focused = nearest;
         focused?.OnFocusGained();
+    }
+
+    // Check if all components of a Vector3 are finite
+    private bool IsFinite(Vector3 v)
+    {
+        return float.IsFinite(v.x) && float.IsFinite(v.y) && float.IsFinite(v.z);
+    }
+
+    // Optional: visualize the interaction radius in the Scene view
+    private void OnDrawGizmosSelected()
+    {
+        if (!enabled) return;
+
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(InteractionOrigin, radius);
     }
 }
