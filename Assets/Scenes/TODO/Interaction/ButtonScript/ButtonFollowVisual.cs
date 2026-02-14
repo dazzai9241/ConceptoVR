@@ -122,8 +122,7 @@ public class ButtonFollowVisual : MonoBehaviour
             Vector3 localPressedPos = visualTarget.InverseTransformPoint(pressedHeight.position);
 
             CheckForPressed(localPokePos, localPressedPos);
-            Debug.Log(isPressed);
-
+            
             // Only allow the visual transform to move between inital pos, and pressed pos
             Vector3 pos = localPokePos;
             if (pos.y < localPressedPos.y)
