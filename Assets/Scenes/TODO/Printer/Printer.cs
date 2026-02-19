@@ -1,8 +1,6 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class Printer : MonoBehaviour
@@ -10,7 +8,6 @@ public class Printer : MonoBehaviour
     [Header("References")]
     [SerializeField] private GameObject paperPrefab;
     [SerializeField] private Camera renderCamera;
-    [SerializeField] private CanvasScaler scaler;
     [SerializeField] private Transform paperStartPos;
     [SerializeField] private Transform paperFinalPos;
     [SerializeField] private TMP_Text printerStamp;
@@ -23,15 +20,13 @@ public class Printer : MonoBehaviour
     [Header("Print Settings")]
     [SerializeField] private float printMoveDuration = 2f;
 
-    private RenderTexture renderTexture;
     private bool IsPrinting = false;
-
     private void Awake()
     {
-        renderTexture = new RenderTexture(textureWidth, textureHeight, 0, RenderTextureFormat.ARGB32);
-        renderTexture.Create();
+        renderCamera.enabled = false;
+       
 
-        scaler.referenceResolution = new Vector2(renderTexture.width, renderTexture.height);
+        //scaler.referenceResolution = new Vector2(renderTexture.width, renderTexture.height);
     }
 
     public void Print(string text)
@@ -50,14 +45,15 @@ public class Printer : MonoBehaviour
         printerStamp.ForceMeshUpdate();
 
         // Render to texture
-        renderCamera.targetTexture = renderTexture;
+        // renderCamera.targetTexture = renderTexture;
+        
+        yield return new WaitForEndOfFrame();
         renderCamera.Render();
-        renderCamera.targetTexture = null;
-
+        
         // Copy to Texture2D
         Texture2D snapshot = new Texture2D(textureWidth, textureHeight, TextureFormat.RGBA32, false);
 
-        RenderTexture.active = renderTexture;
+        RenderTexture.active = renderCamera.targetTexture;
         snapshot.ReadPixels(new Rect(0, 0, textureWidth, textureHeight), 0, 0);
         snapshot.Apply();
         RenderTexture.active = null;
@@ -122,11 +118,5 @@ public class Printer : MonoBehaviour
             grab.enabled = true;
 
         IsPrinting = false;
-    }
-
-    private void OnDestroy()
-    {
-        if (renderTexture != null)
-            renderTexture.Release();
     }
 }

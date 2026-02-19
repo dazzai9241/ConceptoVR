@@ -357,6 +357,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 247255744719295815, guid: b4e6200ae9df05c49abde1b961ddb7d9, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 776004429223685886, guid: b4e6200ae9df05c49abde1b961ddb7d9, type: 3}
       propertyPath: m_Name
       value: Button
@@ -1226,6 +1230,50 @@ PrefabInstance:
     - target: {fileID: 953071733453889647, guid: 17caeffc6b57d82499b12019b0268914, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4186260064913385131, guid: 17caeffc6b57d82499b12019b0268914, type: 3}
+      propertyPath: m_VolumeFrameworkUpdateModeOption
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464168211803107994, guid: 17caeffc6b57d82499b12019b0268914, type: 3}
+      propertyPath: m_HDR
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464168211803107994, guid: 17caeffc6b57d82499b12019b0268914, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464168211803107994, guid: 17caeffc6b57d82499b12019b0268914, type: 3}
+      propertyPath: m_AllowMSAA
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464168211803107994, guid: 17caeffc6b57d82499b12019b0268914, type: 3}
+      propertyPath: m_ClearFlags
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464168211803107994, guid: 17caeffc6b57d82499b12019b0268914, type: 3}
+      propertyPath: orthographic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464168211803107994, guid: 17caeffc6b57d82499b12019b0268914, type: 3}
+      propertyPath: m_TargetDisplay
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464168211803107994, guid: 17caeffc6b57d82499b12019b0268914, type: 3}
+      propertyPath: m_TargetTexture
+      value: 
+      objectReference: {fileID: 8400000, guid: ed11676f45b685e4c9f4982399036e95, type: 2}
+    - target: {fileID: 7464168211803107994, guid: 17caeffc6b57d82499b12019b0268914, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464168211803107994, guid: 17caeffc6b57d82499b12019b0268914, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464168211803107994, guid: 17caeffc6b57d82499b12019b0268914, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8810849925855543752, guid: 17caeffc6b57d82499b12019b0268914, type: 3}
       propertyPath: m_Name
