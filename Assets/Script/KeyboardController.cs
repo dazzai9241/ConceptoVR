@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 public class KeyboardController : MonoBehaviour
 {
-    public float cycleTime = 1f;           
-    public int maxCharacters = 10;         
-    public List<Key> keys;                  
+    public float cycleTime = 1f;
+    public int maxCharacters = 3;   
+    public List<Key> keys;
 
     private Dictionary<char, Key> keyMap = new Dictionary<char, Key>();
     private Key lastKey = null;
@@ -20,19 +20,27 @@ public class KeyboardController : MonoBehaviour
         foreach (var key in keys)
         {
             if (!keyMap.ContainsKey(key.keyChar))
-            {
                 keyMap.Add(key.keyChar, key);
-            }
             else
-            {
                 Debug.LogWarning("Duplicate key detected: " + key.keyChar);
-            }
         }
     }
 
     void Update()
     {
         if (Keyboard.current == null) return;
+
+        if (Keyboard.current.digit0Key.wasPressedThisFrame)
+        {
+            HandleBackspace();
+            return;
+        }
+
+        if (Keyboard.current.digit1Key.wasPressedThisFrame)
+        {
+            HandleSubmit();
+            return;
+        }
 
         foreach (var entry in keyMap)
         {
@@ -71,7 +79,11 @@ public class KeyboardController : MonoBehaviour
         }
         else
         {
-            if (typed.Count >= maxCharacters) return;
+            if (typed.Count >= maxCharacters)
+            {
+                Debug.LogWarning("Character limit reached.");
+                return;
+            }
 
             key.Reset();
             typed.Add(key.CurrentValue);
@@ -83,12 +95,43 @@ public class KeyboardController : MonoBehaviour
         DisplayTyped();
     }
 
+    void HandleBackspace()
+    {
+        if (typed.Count > 0)
+        {
+            typed.RemoveAt(typed.Count - 1);
+            Debug.Log("Backspace pressed");
+            DisplayTyped();
+        }
+        else
+        {
+            Debug.LogWarning("Nothing to delete!");
+        }
+    }
+
+    void HandleSubmit()
+    {
+        if (typed.Count == 0)
+        {
+            Debug.LogError("Error: Empty input.");
+            return;
+        }
+
+        string output = GetTypedString();
+        Debug.Log("Submitted: " + output);
+
+        // Optional: clear after submit
+        typed.Clear();
+        lastKey = null;
+    }
+
     void DisplayTyped()
     {
-        string output = "";
-        foreach (char c in typed)
-            output += c;
+        Debug.Log("Typed: " + GetTypedString());
+    }
 
-        Debug.Log("Typed: " + output);
+    string GetTypedString()
+    {
+        return new string(typed.ToArray());
     }
 }
