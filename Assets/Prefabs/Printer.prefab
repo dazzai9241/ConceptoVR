@@ -135,7 +135,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4214797793668797274}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 2
   m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
@@ -169,11 +169,11 @@ Camera:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 1
+  m_TargetTexture: {fileID: 8400000, guid: ed11676f45b685e4c9f4982399036e95, type: 2}
+  m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 0
-  m_AllowMSAA: 0
+  m_HDR: 1
+  m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 0
@@ -563,7 +563,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Printer
   paperPrefab: {fileID: 961634259465563759, guid: c1629cd2c6bb7cd4db9a5492acaee053, type: 3}
   renderCamera: {fileID: 7464168211803107994}
-  scaler: {fileID: 988794717166081187}
   paperStartPos: {fileID: 8084378992272182909}
   paperFinalPos: {fileID: 2077778256436250065}
   printerStamp: {fileID: 1555178951483563801}
