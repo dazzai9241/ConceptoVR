@@ -1,66 +1,78 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 
-public class VRSmartLockBox : MonoBehaviour
+public class SimpleVRBoxLock : MonoBehaviour
 {
-    public Animator boxAnimator;
-    public string openParameter = "IsOpen";
+    public Animator boxAnimator;       // Box Animator
+    public string openParameter = "IsOpen"; // Bool in Animator
+    public Collider boxTrigger;        // Collider covering inside of box
 
-    private List<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable> objectsInside = new List<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
+    private bool lastState;
 
-    private void OnTriggerEnter(Collider other)
+    void Start()
     {
-        UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable grab = other.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
-        if (grab != null && !objectsInside.Contains(grab))
-        {
-            objectsInside.Add(grab);
-        }
+        lastState = boxAnimator.GetBool(openParameter);
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable grab = other.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
-        if (grab != null && objectsInside.Contains(grab))
-        {
-            objectsInside.Remove(grab);
-        }
-    }
-
-    private void Update()
+    void Update()
     {
         bool isOpen = boxAnimator.GetBool(openParameter);
 
-        foreach (UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable grab in objectsInside)
+        if (isOpen != lastState)
         {
-            if (grab == null) continue;
-
-            Rigidbody rb = grab.GetComponent<Rigidbody>();
-
-            if (isOpen)
-            {
-                // OPEN → allow grabbing and movement
-                grab.enabled = true;
-
-                if (rb != null)
-                    rb.isKinematic = false;
-            }
+            if (!isOpen)
+                LockObjects();
             else
+                UnlockObjects();
+
+            lastState = isOpen;
+        }
+    }
+
+    void LockObjects()
+    {
+        Collider[] objectsInside = Physics.OverlapBox(
+            boxTrigger.bounds.center,
+            boxTrigger.bounds.extents,
+            boxTrigger.transform.rotation
+        );
+
+        foreach (var col in objectsInside)
+        {
+            UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable grab = col.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
+            Rigidbody rb = col.GetComponent<Rigidbody>();
+            if (grab != null)
             {
-                // CLOSED → force release and lock
+                // Force release if held
                 if (grab.isSelected)
-                {
-                    grab.interactionManager.SelectExit(
-                        grab.firstInteractorSelecting,
-                        grab
-                    );
-                }
+                    grab.interactionManager.SelectExit(grab.firstInteractorSelecting, grab);
 
                 grab.enabled = false;
-
-                if (rb != null)
-                    rb.isKinematic = true;
             }
+
+            if (rb != null)
+            {
+                rb.isKinematic = true;
+            }
+        }
+    }
+
+    void UnlockObjects()
+    {
+        Collider[] objectsInside = Physics.OverlapBox(
+            boxTrigger.bounds.center,
+            boxTrigger.bounds.extents,
+            boxTrigger.transform.rotation
+        );
+
+        foreach (var col in objectsInside)
+        {
+            UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable grab = col.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
+            Rigidbody rb = col.GetComponent<Rigidbody>();
+            if (grab != null)
+                grab.enabled = true;
+            if (rb != null)
+                rb.isKinematic = false;
         }
     }
 }
