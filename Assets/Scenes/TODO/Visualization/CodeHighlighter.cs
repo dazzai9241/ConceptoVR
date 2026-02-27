@@ -25,9 +25,6 @@ public static class CodeHighlighter
         if (string.IsNullOrEmpty(input))
             return "";
 
-        // Escape TMP special characters
-        input = input.Replace("<", "&lt;").Replace(">", "&gt;");
-
         // MULTILINE COMMENT
         input = Regex.Replace(input,
             @"/\*.*?\*/",
