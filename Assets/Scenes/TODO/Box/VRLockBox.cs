@@ -1,11 +1,10 @@
 using UnityEngine;
 
-
 public class SimpleVRBoxLock : MonoBehaviour
 {
-    public Animator boxAnimator;       // Box Animator
-    public string openParameter = "IsOpen"; // Bool in Animator
-    public Collider boxTrigger;        // Collider covering inside of box
+    public Animator boxAnimator;
+    public string openParameter = "IsOpen";
+    public Collider boxTrigger;
 
     private bool lastState;
 
@@ -17,6 +16,8 @@ public class SimpleVRBoxLock : MonoBehaviour
     void Update()
     {
         bool isOpen = boxAnimator.GetBool(openParameter);
+
+        Debug.Log("isOpen: " + isOpen + " | lastState: " + lastState);
 
         if (isOpen != lastState)
         {
@@ -34,16 +35,22 @@ public class SimpleVRBoxLock : MonoBehaviour
         Collider[] objectsInside = Physics.OverlapBox(
             boxTrigger.bounds.center,
             boxTrigger.bounds.extents,
-            boxTrigger.transform.rotation
+            boxTrigger.transform.rotation,
+            ~0,
+            QueryTriggerInteraction.Collide
         );
+
+        Debug.Log("LockObjects called! Objects found: " + objectsInside.Length);
 
         foreach (var col in objectsInside)
         {
+            Debug.Log("Found object: " + col.gameObject.name);
+
             UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable grab = col.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
             Rigidbody rb = col.GetComponent<Rigidbody>();
             if (grab != null)
             {
-                // Force release if held
+                Debug.Log("Disabling grab on: " + col.gameObject.name);
                 if (grab.isSelected)
                     grab.interactionManager.SelectExit(grab.firstInteractorSelecting, grab);
 
@@ -62,7 +69,9 @@ public class SimpleVRBoxLock : MonoBehaviour
         Collider[] objectsInside = Physics.OverlapBox(
             boxTrigger.bounds.center,
             boxTrigger.bounds.extents,
-            boxTrigger.transform.rotation
+            boxTrigger.transform.rotation,
+            ~0,
+            QueryTriggerInteraction.Collide
         );
 
         foreach (var col in objectsInside)
