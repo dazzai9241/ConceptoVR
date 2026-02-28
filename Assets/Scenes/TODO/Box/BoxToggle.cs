@@ -3,7 +3,6 @@ using UnityEngine;
 public class BoxToggle : MonoBehaviour
 {
     private Animator animator;
-    private bool isOpen = false;
 
     private void Awake()
     {
@@ -12,15 +11,7 @@ public class BoxToggle : MonoBehaviour
 
     public void ToggleBox()
     {
-        if (!isOpen)
-        {
-            animator.SetTrigger("Open");
-            isOpen = true;
-        }
-        else
-        {
-            animator.SetTrigger("Close");
-            isOpen = false;
-        }
+        bool current = animator.GetBool("IsOpen");
+        animator.SetBool("IsOpen", !current);
     }
 }
