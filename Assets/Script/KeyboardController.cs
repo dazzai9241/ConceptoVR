@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using TMPro;
 
 public class KeyboardController : MonoBehaviour
 {
@@ -7,7 +8,8 @@ public class KeyboardController : MonoBehaviour
     public int maxCharacters = 3;
     public List<Key> keys;
 
-    public Printer printer;  
+    public Printer printer;
+    public TMP_Text display;
 
     private Dictionary<char, Key> keyMap = new Dictionary<char, Key>();
     private Key lastKey = null;
@@ -25,6 +27,8 @@ public class KeyboardController : MonoBehaviour
             else
                 Debug.LogWarning("Duplicate key detected: " + key.keyChar);
         }
+
+        UpdateDisplay();
     }
 
     public void PressKey(string keyValue)
@@ -83,7 +87,7 @@ public class KeyboardController : MonoBehaviour
         lastKey = key;
         lastPressTime = Time.time;
 
-        DisplayTyped();
+        UpdateDisplay();
     }
 
     void HandleBackspace()
@@ -91,8 +95,7 @@ public class KeyboardController : MonoBehaviour
         if (typed.Count > 0)
         {
             typed.RemoveAt(typed.Count - 1);
-            Debug.Log("Backspace pressed");
-            DisplayTyped();
+            UpdateDisplay();
         }
         else
         {
@@ -113,7 +116,7 @@ public class KeyboardController : MonoBehaviour
 
         if (printer != null)
         {
-            printer.Print(output);  
+            printer.Print(output);
         }
         else
         {
@@ -122,11 +125,19 @@ public class KeyboardController : MonoBehaviour
 
         typed.Clear();
         lastKey = null;
+        UpdateDisplay(); 
     }
 
-    void DisplayTyped()
+    void UpdateDisplay()
     {
-        Debug.Log("Typed: " + GetTypedString());
+        if (display != null)
+        {
+            display.text = GetTypedString();
+        }
+        else
+        {
+            Debug.LogWarning("Display not assigned!");
+        }
     }
 
     string GetTypedString()
