@@ -25,8 +25,8 @@ Transform:
   m_GameObject: {fileID: 2115798623731169519}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.5914, y: -0.13010001, z: -0.0609}
-  m_LocalScale: {x: 0.08093211, y: 0.08093213, z: 0.08093213}
+  m_LocalPosition: {x: 0, y: 0, z: 0.042200003}
+  m_LocalScale: {x: 0.08093211, y: 0.08093211, z: 0.08093211}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 953071733453889647}
@@ -56,8 +56,8 @@ Transform:
   m_GameObject: {fileID: 2124042177076584440}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.5914, y: -0.13010001, z: -0.11858734}
-  m_LocalScale: {x: 0.08093211, y: 0.08093212, z: 0.08093212}
+  m_LocalPosition: {x: 0, y: 0, z: -0.015487335}
+  m_LocalScale: {x: 0.08093211, y: 0.0809321, z: 0.0809321}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 953071733453889647}
@@ -354,7 +354,7 @@ Transform:
   m_GameObject: {fileID: 6361365055463298614}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.5914, y: -0.13010001, z: -0.1031}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.08093211, y: 0.08093211, z: 0.08093211}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -539,7 +539,7 @@ Transform:
   m_GameObject: {fileID: 8810849925855543752}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5914, y: 0.7091, z: 0.1031}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -561,7 +561,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1231bc9a44132ea4bb7eac329b54195e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Printer
-  paperPrefab: {fileID: 961634259465563759, guid: c1629cd2c6bb7cd4db9a5492acaee053, type: 3}
+  paperPrefab: {fileID: -5068869914604383010, guid: c1629cd2c6bb7cd4db9a5492acaee053, type: 3}
   renderCamera: {fileID: 7464168211803107994}
   paperStartPos: {fileID: 8084378992272182909}
   paperFinalPos: {fileID: 2077778256436250065}
