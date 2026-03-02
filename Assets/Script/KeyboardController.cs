@@ -1,12 +1,15 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using TMPro;
 
 public class KeyboardController : MonoBehaviour
 {
     public float cycleTime = 1f;
-    public int maxCharacters = 3;   
+    public int maxCharacters = 3;
     public List<Key> keys;
+
+    public Printer printer;
+    public TMP_Text display;
 
     private Dictionary<char, Key> keyMap = new Dictionary<char, Key>();
     private Key lastKey = null;
@@ -15,7 +18,7 @@ public class KeyboardController : MonoBehaviour
 
     void Start()
     {
-        keyMap = new Dictionary<char, Key>();
+        keyMap.Clear();
 
         foreach (var key in keys)
         {
@@ -24,55 +27,47 @@ public class KeyboardController : MonoBehaviour
             else
                 Debug.LogWarning("Duplicate key detected: " + key.keyChar);
         }
+
+        UpdateDisplay();
     }
 
-    void Update()
+    public void PressKey(string keyValue)
     {
-        if (Keyboard.current == null) return;
-
-        if (Keyboard.current.digit0Key.wasPressedThisFrame)
+        if (typed.Count >= maxCharacters)
         {
-            HandleBackspace();
+            Debug.LogWarning("Character limit reached.");
             return;
         }
 
-        if (Keyboard.current.digit1Key.wasPressedThisFrame)
+        if (string.IsNullOrEmpty(keyValue))
+            return;
+
+        char c = keyValue[0];
+
+        if (!keyMap.ContainsKey(c))
         {
-            HandleSubmit();
+            Debug.LogWarning("Key not found: " + c);
             return;
         }
 
-        foreach (var entry in keyMap)
-        {
-            if (WasKeyPressed(entry.Key))
-            {
-                HandleKeyPress(entry.Value);
-                break;
-            }
-        }
+        HandleKeyPress(keyMap[c]);
     }
 
-    bool WasKeyPressed(char keyChar)
+    public void PressBackspace()
     {
-        switch (keyChar)
-        {
-            case '2': return Keyboard.current.digit2Key.wasPressedThisFrame;
-            case '3': return Keyboard.current.digit3Key.wasPressedThisFrame;
-            case '4': return Keyboard.current.digit4Key.wasPressedThisFrame;
-            case '5': return Keyboard.current.digit5Key.wasPressedThisFrame;
-            case '6': return Keyboard.current.digit6Key.wasPressedThisFrame;
-            case '7': return Keyboard.current.digit7Key.wasPressedThisFrame;
-            case '8': return Keyboard.current.digit8Key.wasPressedThisFrame;
-            case '9': return Keyboard.current.digit9Key.wasPressedThisFrame;
-            default: return false;
-        }
+        HandleBackspace();
+    }
+
+    public void PressSubmit()
+    {
+        HandleSubmit();
     }
 
     void HandleKeyPress(Key key)
     {
         float timeSinceLast = Time.time - lastPressTime;
 
-        if (key == lastKey && timeSinceLast < cycleTime)
+        if (key == lastKey && timeSinceLast < cycleTime && typed.Count > 0)
         {
             key.Cycle();
             typed[typed.Count - 1] = key.CurrentValue;
@@ -92,7 +87,7 @@ public class KeyboardController : MonoBehaviour
         lastKey = key;
         lastPressTime = Time.time;
 
-        DisplayTyped();
+        UpdateDisplay();
     }
 
     void HandleBackspace()
@@ -100,8 +95,7 @@ public class KeyboardController : MonoBehaviour
         if (typed.Count > 0)
         {
             typed.RemoveAt(typed.Count - 1);
-            Debug.Log("Backspace pressed");
-            DisplayTyped();
+            UpdateDisplay();
         }
         else
         {
@@ -113,21 +107,37 @@ public class KeyboardController : MonoBehaviour
     {
         if (typed.Count == 0)
         {
-            Debug.LogError("Error: Empty input.");
+            Debug.LogError("Error: Empty input!");
             return;
         }
 
         string output = GetTypedString();
         Debug.Log("Submitted: " + output);
 
-        // Optional: clear after submit
+        if (printer != null)
+        {
+            printer.Print(output);
+        }
+        else
+        {
+            Debug.LogError("Printer not assigned!");
+        }
+
         typed.Clear();
         lastKey = null;
+        UpdateDisplay(); 
     }
 
-    void DisplayTyped()
+    void UpdateDisplay()
     {
-        Debug.Log("Typed: " + GetTypedString());
+        if (display != null)
+        {
+            display.text = GetTypedString();
+        }
+        else
+        {
+            Debug.LogWarning("Display not assigned!");
+        }
     }
 
     string GetTypedString()
