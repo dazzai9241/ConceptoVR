@@ -1,2 +1,17 @@
 fileFormatVersion: 2
 guid: 1231bc9a44132ea4bb7eac329b54195e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - paperPrefab: {fileID: -5068869914604383010, guid: c1629cd2c6bb7cd4db9a5492acaee053, type: 3}
+  - renderCamera: {instanceID: 0}
+  - paperStartPos: {instanceID: 0}
+  - paperFinalPos: {instanceID: 0}
+  - printerStamp: {instanceID: 0}
+  - printerAudio: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

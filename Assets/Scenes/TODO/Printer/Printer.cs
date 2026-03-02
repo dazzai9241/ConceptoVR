@@ -6,7 +6,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 public class Printer : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private GameObject paperPrefab;
+    [SerializeField] private Paper paperPrefab;
     [SerializeField] private Camera renderCamera;
     [SerializeField] private Transform paperStartPos;
     [SerializeField] private Transform paperFinalPos;
@@ -33,12 +33,21 @@ public class Printer : MonoBehaviour
     {
         if (!IsPrinting)
         {
-            StartCoroutine(PrintRoutine(text));
+            StartCoroutine(PrintRoutine(text, Paper.PAPER_TYPE.Data));
             IsPrinting = true;
         }
     }
 
-    private IEnumerator PrintRoutine(string text)
+    public void PrintHashkey(string key)
+    {
+        if (!IsPrinting)
+        {
+            StartCoroutine(PrintRoutine(key, Paper.PAPER_TYPE.Hashkey));
+            IsPrinting = true;
+        }
+    }
+
+    private IEnumerator PrintRoutine(string text, Paper.PAPER_TYPE type)
     {
         // Set TMP text
         printerStamp.text = text;
@@ -60,7 +69,9 @@ public class Printer : MonoBehaviour
 
 
         // Spawn paper at start
-        GameObject paper = Instantiate(paperPrefab, paperStartPos.position, paperStartPos.rotation);
+        Paper paper = Instantiate(paperPrefab, paperStartPos.position, paperStartPos.rotation);
+        paper.data = text;
+        paper.PaperType = type;
 
         MeshRenderer renderer = paper.GetComponent<MeshRenderer>();
         Material newMat = new Material(renderer.material);
