@@ -4,8 +4,8 @@ using TMPro;
 
 public class KeyboardController : MonoBehaviour
 {
-    public float cycleTime = 1f;
-    public int maxCharacters = 3;
+    public float cycleTime = 1.5f;
+    public int maxCharacters = 4;
     public List<Key> keys;
 
     public Printer printer;

@@ -6309,29 +6309,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cffce8742a213cc4197cdb45cedea751, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KeyboardController
-  cycleTime: 1
-  maxCharacters: 3
+  cycleTime: 1.5
+  maxCharacters: 4
   keys:
   - keyChar: 49
-    values: 4100420043003100
-  - keyChar: 0
-    values: 
-  - keyChar: 0
-    values: 
-  - keyChar: 0
-    values: 
-  - keyChar: 0
-    values: 
-  - keyChar: 0
-    values: 
-  - keyChar: 0
-    values: 
-  - keyChar: 0
-    values: 
-  - keyChar: 0
-    values: 
-  - keyChar: 0
-    values: 
+    values: 3100
+  - keyChar: 50
+    values: 4100420043003200
+  - keyChar: 51
+    values: 4400450046003300
+  - keyChar: 52
+    values: 4700480049003400
+  - keyChar: 53
+    values: 4a004b004c003500
+  - keyChar: 54
+    values: 4d004e004f003600
+  - keyChar: 55
+    values: 50005100520053003700
+  - keyChar: 56
+    values: 5400550056003800
+  - keyChar: 57
+    values: 5700580059005a003900
+  - keyChar: 48
+    values: 3000
   printer: {fileID: 1342188287}
   display: {fileID: 1341267737}
 --- !u!4 &2090391488
