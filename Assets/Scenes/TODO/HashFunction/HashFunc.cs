@@ -2,8 +2,13 @@ using UnityEngine;
 
 namespace Concepto.HashMap
 {
+   
+
     public class HashFunc
     {
+        public static int NumBoxes = 8;
+        // Takes in a string key and returns an index in the range 0 to boxesCount - 1
+        // to be used to lookup on the hashtable
         public static int Hash(string key, int boxesCount)
         {
             int hash = 0;
@@ -20,3 +25,4 @@ namespace Concepto.HashMap
         }
     }
 }
+
