@@ -9,7 +9,9 @@ public class KeyboardController : MonoBehaviour
     public List<Key> keys;
 
     public Printer printer;
-    public TMP_Text display;
+
+    [SerializeField]
+    private TextDisplay display;
 
     private Dictionary<char, Key> keyMap = new Dictionary<char, Key>();
     private Key lastKey = null;
@@ -132,7 +134,7 @@ public class KeyboardController : MonoBehaviour
     {
         if (display != null)
         {
-            display.text = GetTypedString();
+            display.DisplayText = GetTypedString();
         }
         else
         {
