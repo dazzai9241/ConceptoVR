@@ -4,12 +4,14 @@ using TMPro;
 
 public class KeyboardController : MonoBehaviour
 {
-    public float cycleTime = 1f;
-    public int maxCharacters = 3;
+    public float cycleTime = 1.5f;
+    public int maxCharacters = 4;
     public List<Key> keys;
 
     public Printer printer;
-    public TMP_Text display;
+
+    [SerializeField]
+    private TextDisplay display;
 
     private Dictionary<char, Key> keyMap = new Dictionary<char, Key>();
     private Key lastKey = null;
@@ -132,7 +134,7 @@ public class KeyboardController : MonoBehaviour
     {
         if (display != null)
         {
-            display.text = GetTypedString();
+            display.DisplayText = GetTypedString();
         }
         else
         {
