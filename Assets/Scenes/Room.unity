@@ -157,9 +157,9 @@ Transform:
   - {fileID: 748032307}
   - {fileID: 1942688201}
   - {fileID: 1101269763}
+  - {fileID: 935889644}
   - {fileID: 1855674981}
   - {fileID: 150821758}
-  - {fileID: 935889644}
   - {fileID: 139780066}
   - {fileID: 1199841431}
   - {fileID: 31972771}
@@ -1769,7 +1769,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!65 &1101269760
 BoxCollider:
