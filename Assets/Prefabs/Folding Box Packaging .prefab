@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 1500788727475769572}
   - component: {fileID: 4255817934924439891}
   - component: {fileID: 2702911811520283912}
+  - component: {fileID: 3999355020854381479}
   m_Layer: 0
   m_Name: KeySocket
   m_TagString: Untagged
@@ -132,6 +133,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.1, y: 0.1, z: 0.1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3999355020854381479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4235885403311962730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a65c8023708f2f498ed7bf3fcab943c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoxContentTracker
+  boxAnimator: {fileID: 7963141857302068566}
+  openParameter: IsOpen
 --- !u!1001 &4940864559168517454
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -374,6 +389,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 06b62ecabdf6f2d4d80c9660d6e02588, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7963141857302068566}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 06b62ecabdf6f2d4d80c9660d6e02588, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2903076901110846565}
   m_SourcePrefab: {fileID: 100100000, guid: 06b62ecabdf6f2d4d80c9660d6e02588, type: 3}
 --- !u!4 &434820885900993359 stripped
 Transform:
@@ -407,3 +425,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2903076901110846565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5210686700589893663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a265128afc8c83b4aa2c69583a5b9b72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoxKeyLock
+  hashkey: 0
+  boxAnimator: {fileID: 7963141857302068566}
+  openParameter: IsOpen
+  keySocket: {fileID: 4255817934924439891}
