@@ -12,6 +12,8 @@ namespace Canvas
 
         public abstract void Deactivate();
 
+        public abstract void OnSlideExit();
+
         /// <summary>
         /// Call this when your Step finishes what it needs to do.
         /// </summary>

@@ -28,6 +28,12 @@ namespace Canvas
             Debug.Assert(slides != null && slides.Length > 0,
                 $"[SlidesManager] No Slides assigned on {name}");
 
+            foreach (var slide in slides)
+            {
+                slide.manager = this;
+            }
+
+
             currentSlideIndex = 0;
             ShowCurrentSlide();
         }
@@ -72,7 +78,6 @@ namespace Canvas
                 PrevSlide();
         }
 
-        // Optional: public read-only access
         public Slides CurrentSlide => IsValidState() ? slides[currentSlideIndex] : null;
         public int CurrentSlideIndex => currentSlideIndex;
         public int SlideCount => slides?.Length ?? 0;

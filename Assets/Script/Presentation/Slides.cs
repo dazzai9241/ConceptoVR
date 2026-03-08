@@ -1,6 +1,5 @@
 using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.Rendering;
+using UnityEngine.Events;
 
 namespace Canvas
 {
@@ -10,12 +9,20 @@ namespace Canvas
         [Header("Configuration")]
         public Step[] steps;
 
+        [HideInInspector]
+        public SlidesManager manager;
+
+        
 
         public void Setup()
         {
             Debug.Assert(steps != null, $"[Slides] Steps array is null on {name}");
             Debug.Assert(steps.Length > 0, $"[Slides] Steps array is empty on {name}");
 
+            foreach (Step step in steps)
+            {
+                step.OnCompleted.AddListener(OnStepComplete);
+            }
 
             if (currentStep != -1)
                 Debug.LogWarning($"[Slides] Setup() called multiple times on {name}. Previous state will be overridden.");
@@ -33,6 +40,12 @@ namespace Canvas
         {
             if (currentStep < 0 || steps == null || currentStep >= steps.Length)
                 return; // Already cleaned or never set up
+
+            foreach (Step step in steps)
+            {
+                step.OnSlideExit();
+                step.OnCompleted.RemoveListener(OnStepComplete);
+            }
 
             steps[currentStep].Deactivate();
             currentStep = -1; // Return to initial state
@@ -69,6 +82,12 @@ namespace Canvas
             AssertStepIsNotNull(currentStep);
             steps[currentStep].Activate();
             return false;
+        }
+
+        private void OnStepComplete()
+        {
+            if (manager.CurrentSlide == this)
+                manager.NextStep();
         }
 
 
