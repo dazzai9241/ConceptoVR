@@ -25,8 +25,6 @@ public class Printer : MonoBehaviour
     {
         renderCamera.enabled = false;
        
-
-        //scaler.referenceResolution = new Vector2(renderTexture.width, renderTexture.height);
     }
 
     public void Print(string text)

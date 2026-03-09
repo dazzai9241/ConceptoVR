@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Canvas 
 {
-    public class SetObjectInactive : Step
+    public class SetObjectInactiveStep : Step
     {
         [SerializeField]
         private GameObject m_gameObject;

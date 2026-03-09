@@ -1,4 +1,3 @@
-using System.IO.Pipes;
 using UnityEngine;
 using UnityEngine.Video;
 
@@ -8,6 +7,7 @@ namespace Canvas
     {
         [SerializeField]
         VideoPlayer player;
+        
 
         public override void Activate()
         {
