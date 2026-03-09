@@ -95,16 +95,16 @@ namespace Canvas
 
         }
 
-        private void Update()
+        public void JumpToSlide(int index, bool restart = false)
         {
-            
+            if (!IsValidState()) return;
+
+            GoToSlide(index, restart);
         }
 
-
-
-        private void GoToSlide(int index)
+        private void GoToSlide(int index, bool restart = false)
         {
-            if (currentSlideIndex == index) return;
+            if (currentSlideIndex == index && !restart) return;
 
             // Cleanup current
             if (IsValidState())

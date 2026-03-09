@@ -108,5 +108,15 @@ namespace Canvas
             Debug.Assert(steps[index] != null,
                 $"[Slides] Step at index {index} is null on {name}!");
         }
+
+        public void Replay()
+        {
+            Debug.Log("Attempting to replay slide.");
+            if (manager.CurrentSlide != this)
+                return;
+
+            Debug.Log("Replayed slide");
+            manager.JumpToSlide(manager.CurrentSlideIndex, true);
+        }
     }
 }
